@@ -9,7 +9,7 @@ return {
     local cwd = vim.uv.cwd()
     local basename = vim.fs.basename(cwd)
     _99.setup({
-      model = "opencode/kimi-k2.5-free",
+      model = "opencode/big-pickle",
       logger = {
         level = _99.DEBUG,
         path = "/tmp/" .. basename .. ".99.debug",
@@ -69,7 +69,7 @@ return {
     -- likely ill add a mode check and assert on required visual mode
     -- so just prepare for it now
     vim.keymap.set("v", "<leader>9v", function()
-      _99.visual_prompt()
+      _99.visual()
     end)
 
     --- if you have a request you dont want to make any changes, just cancel it
