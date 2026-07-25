@@ -1,11 +1,12 @@
 return {
   "ThePrimeagen/99",
+  dependencies = { "saghen/blink.compat" },
   config = function()
     local _99 = require("99")
     local cwd = vim.uv.cwd()
     local basename = vim.fs.basename(cwd)
     _99.setup({
-      model = "opencode-go/minimax-m2.7",
+      model = "opencode-go/kimi-k3",
       logger = {
         level = _99.DEBUG,
         path = "/tmp/" .. basename .. ".99.debug",
@@ -28,7 +29,7 @@ return {
         --- - Both methods apply the configured `exclude` list on top of gitignore
 
         --- What autocomplete engine to use. Defaults to native (built-in) if not specified.
-        source = "cmp", -- "native" (default), "cmp", or "blink"
+        source = "blink", -- "native" (default), "cmp", or "blink"
       },
 
       md_files = {
