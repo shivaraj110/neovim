@@ -13,7 +13,6 @@ return {
         print_on_error = true,
       },
       completion = {
-
         custom_rules = {
           "scratch/custom_rules/",
         },
@@ -33,6 +32,7 @@ return {
       },
 
       md_files = {
+        "AGENTS.md",
         "AGENT.md",
         "CLAUDE.md",
       },
@@ -43,16 +43,21 @@ return {
     -- so i have this set to visual mode so i dont screw up and use an
     -- old visual selection
     --
-    -- likely ill add a mode check and assert on required visual mode
-    -- so just prepare for it now
+    -- mode check + assert on required visual mode, as prepared for
+    local function is_visual_mode()
+      local mode = vim.api.nvim_get_mode().mode
+      return mode == "v" or mode == "V" or mode == "\22" -- \22 is <C-v>
+    end
+
     vim.keymap.set("v", "<leader>9v", function()
+      assert(is_visual_mode(), "99: <leader>9v requires an active visual selection")
       _99.visual()
-    end)
+    end, { desc = "99: send visual selection" })
 
     --- if you have a request you dont want to make any changes, just cancel it
     vim.keymap.set("n", "<leader>9s", function()
       _99.stop_all_requests()
-    end)
+    end, { desc = "99: stop all requests" })
 
     vim.keymap.set("n", "<leader>9m", function()
       vim.ui.input({ prompt = "Model: ", default = _99.get_model() }, function(input)
@@ -61,10 +66,10 @@ return {
           vim.notify("Model set to: " .. input)
         end
       end)
-    end)
+    end, { desc = "99: set model" })
 
     vim.keymap.set("n", "<leader>9b", function()
       _99.vibe()
-    end)
+    end, { desc = "99: vibe" })
   end,
 }
